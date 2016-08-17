@@ -5,6 +5,7 @@ class Article(models.Model):
     STATUS_CHOICES = (
         ('d', 'Draft'),
         ('p', 'Published'),
+        ('r', 'Recycled'),
     )
     title = models.CharField('标题', max_length=70)
     body = models.TextField('正文')
