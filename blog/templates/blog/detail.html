@@ -1,0 +1,12 @@
+{% extends 'blog/base.html' %}
+{%  block content %}
+    <a href="{% url 'blog:index' %}">首页</a>
+    <a href="">{{ article.category.name }}</a>
+    <a href="" title="" rel="category"></a>
+<div id="bd"></div>
+    <h1>{{ article.title }}</h1>
+    <h3>{{ article.created_time|date:"Y-m-d h:m:s" }}</h3>
+    <div>
+    {{ article.body |safe }}
+    </div>
+{% endblock %}

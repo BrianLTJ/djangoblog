@@ -8,7 +8,7 @@ class Article(models.Model):
     )
     title = models.CharField('标题', max_length=70)
     body = models.TextField('正文')
-    created_time = models.DateTimeField('创建时间', auto_now=True)
+    created_time = models.DateTimeField('创建时间', auto_now_add=True)
     last_modified_time = models.DateTimeField('修改时间', auto_now=True)
     status = models.CharField('文章状态', max_length=1, choices=STATUS_CHOICES)
     abstract = models.CharField('摘要', max_length=54, blank=True, null=True)
