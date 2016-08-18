@@ -1,6 +1,12 @@
+{% load paginate_tags %}
+{% paginate article_list 5 %}
+
 {% for article in article_list %}
     <h1>
         <a href="{% url 'blog:detail' article.pk %}">{{ article.title }}</a>
     </h1>
 {% endfor %}
 <h2>分类</h2>
+
+
+{% include 'blog/pagination.html' %}
