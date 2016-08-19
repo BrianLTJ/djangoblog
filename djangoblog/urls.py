@@ -21,5 +21,5 @@ from control import views
 urlpatterns = [
     # url(r'^admin/', admin.site.urls),
     url(r'', include('blog.urls', namespace='blog', app_name='blog')),
-    url(r'^admin', include('control.urls')),
+    url(r'^admin', include('control.urls', namespace='control', app_name='control')),
 ]

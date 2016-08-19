@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block PAGE_TITLE %}{% endblock %}</title>
+</head>
+<body>
+<div id="nav-area">
+    <ul>
+        <li>首页</li>
+        <ul>
+            <li>2</li>
+            <li>sadf</li>
+        </ul>
+        <li>文章</li>
+        <ul>
+            <li><a href="{% url 'control:article_all' %}">所有</a></li>
+            <li><a href="{% url 'control:article_published' %}">已发布</a></li>
+            <li><a href="{% url 'control:article_draft' %}">草稿</a></li>
+            <li><a href="{% url 'control:article_recycle' %}">回收站</a></li>
+        </ul>
+        <li>分类标签</li>
+        <ul>
+            <li>分类</li>
+            <li>标签</li>
+        </ul>
+    </ul>
+</div>
+<div class="main">
+    {% block main %}{% endblock %}
+</div>
+</body>
+</html>
