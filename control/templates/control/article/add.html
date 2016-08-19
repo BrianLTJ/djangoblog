@@ -1,0 +1,35 @@
+{% extends 'control/base.html' %}
+{% block PAGE_TITLE %}添加文章{% endblock %}
+{% block main %}
+    <h2>添加文章</h2>
+    <form action="{% url 'control:article_add_handler' %}" method="post">
+    <div>
+    <label for="">标题</label>
+    <input type="text" name="title" value="">
+</div>
+    <div><label for="">分类</label>
+        <select name="category" id="">
+            <option value="">----</option>
+            {% for cate in category %}
+                <option value="{{ cate.id }}">{{ cate.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div><label for="">状态</label><select name="status" id="">
+        <option value="p">发布</option>
+        <option value="d">草稿</option>
+    </select></div>
+    <div>
+        <label for="">摘要</label>
+        <textarea name="abstract" id="" cols="100" rows="20"></textarea>
+    </div>
+    <div>
+        <label for="">正文</label>
+        <textarea name="body" id="" cols="100" rows="20"></textarea>
+    </div>
+    {% csrf_token %}
+        <input type="submit">
+    </form>
+
+
+{% endblock %}

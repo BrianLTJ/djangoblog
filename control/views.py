@@ -1,10 +1,31 @@
 from django.shortcuts import render
+from django.http import HttpResponseRedirect
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from blog.models import Article, Category, Tag
 import markdown2
+import time
+from datetime import datetime, date
 
 # Create your views here.
+def ArticleAdd(request):
+    category = Category.objects.all()
+    context = {'category': category}
+    return render(request, 'control/article/add.html', context)
+
+
+def ArticleAddHandler(request):
+    if request.method == 'POST':
+        article = Article()
+        article.id = int(time.mktime(datetime.now().timetuple()))
+        article.title = request.POST.get('title', '')
+        article.body = request.POST.get('body', '')
+        article.category = Category.objects.get(id=int(request.POST.get('category')))
+        article.save()
+
+    return HttpResponseRedirect('/admin/article/add')
+
+
 class ArticleAll(ListView):
     template_name = 'control/article/all.html'
     model = Article
