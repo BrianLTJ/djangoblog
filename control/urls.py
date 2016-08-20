@@ -11,7 +11,11 @@ urlpatterns = [
     url(r'^/article/recycle$', views.ArticleRecycle.as_view(), name='article_recycle'),
     url(r'^/article/edit/(?P<article_id>\d+)$', views.ArticleEdit.as_view(), name='article_edit'),
     url(r'^/attr/category$', views.CategoryList.as_view(), name='attr_category'),
-    url(r'^/attr/category/add_handler$', views.CategoryAddHandler, name='attr_category_add_handler'),
+    url(r'^/attr/category/handler/add$', views.CategoryAddHandler, name='attr_category_add_handler'),
+    url(r'^/attr/category/handler/edit$', views.CategoryEditHandler, name='attr_category_edit_handler'),
+    url(r'^/attr/category/handler/del$', views.CategoryDelHandler, name='attr_category_del_handler'),
     url(r'^/attr/tag$', views.TagList.as_view(), name='attr_tag'),
-    url(r'^/attr/tag/add_handler$', views.TagAddHandler, name='attr_tag_add_handler'),
+    url(r'^/attr/tag/handler/add$', views.TagAddHandler, name='attr_tag_add_handler'),
+    url(r'^/attr/tag/handler/edit$', views.TagEditHandler, name='attr_tag_edit_handler'),
+    url(r'^/attr/tag/handler/del$', views.TagDelHandler, name='attr_tag_del_handler'),
 ]

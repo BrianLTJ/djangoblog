@@ -6,11 +6,42 @@
     <h3>分类列表</h3>
     </div>
     <div>
-        <ul>
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>分类名称</th>
+                <th>创建时间</th>
+                <th>上次修改</th>
+                <th>修改</th>
+                <th>删除</th>
+            </tr>
+            </thead>
             {% for cate in category_list %}
-            <li>{{ cate.name }}</li>
+                <tr>
+                    <td>{{ cate.id }}</td>
+                    <td>{{ cate.name }}</td>
+                    <td>{{ cate.created_time|date:'Y-m-d h:i:s' }}</td>
+                    <td>{{ cate.last_modified_time|date:'Y-m-d h:i:s' }}</td>
+                    <td>
+                        <form action="{% url 'control:attr_category_edit_handler' %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="id" value="{{ cate.id }}">
+                            <input type="text" name="name" value="{{ cate.name }}">
+                            <button type="submit">修改</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form action="{% url 'control:attr_category_del_handler' %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="id" value="{{ cate.id }}">
+                            <button type="submit">删除</button>
+                        </form>
+                    </td>
+                </tr>
             {% endfor %}
-        </ul>
+        </table>
+
     </div>
     <div>
     <h3>添加分类</h3>

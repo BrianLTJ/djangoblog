@@ -4,11 +4,43 @@
     <h2>标签列表</h2>
     <div><h3>所有标签</h3></div>
     <div>
-    <ul>
-        {% for tag in tag_list %}
-            <li>{{ tag.name }}</li>
-        {% endfor %}
-    </ul>
+
+            <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>标签名称</th>
+                <th>创建时间</th>
+                <th>上次修改</th>
+                <th>修改</th>
+                <th>删除</th>
+            </tr>
+            </thead>
+            {% for tag in tag_list %}
+                <tr>
+                    <td>{{ tag.id }}</td>
+                    <td>{{ tag.name }}</td>
+                    <td>{{ tag.created_time|date:'Y-m-d h:i:s' }}</td>
+                    <td>{{ tag.last_modified_time|date:'Y-m-d h:i:s' }}</td>
+                    <td>
+                        <form action="{% url 'control:attr_tag_edit_handler' %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="id" value="{{ tag.id }}">
+                            <input type="text" name="name" value="{{ tag.name }}">
+                            <button type="submit">修改</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form action="{% url 'control:attr_tag_del_handler' %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="id" value="{{ tag.id }}">
+                            <button type="submit">删除</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+
     </div>
     <div>
     <h3>添加标签</h3>

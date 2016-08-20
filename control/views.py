@@ -8,6 +8,10 @@ import time
 from datetime import datetime, date
 
 # Create your views here.
+def GetIDBasedOnTime():
+    return int(time.mktime(datetime.now().timetuple()))
+
+
 def Index(request):
     return render(request, 'control/base.html')
 
@@ -20,7 +24,7 @@ def ArticleAdd(request):
 def ArticleAddHandler(request):
     if request.method == 'POST':
         article = Article()
-        article.id = int(time.mktime(datetime.now().timetuple()))
+        article.id = GetIDBasedOnTime()
         article.title = request.POST.get('title', '')
         article.body = request.POST.get('body', '')
         article.category = Category.objects.get(id=int(request.POST.get('category')))
@@ -96,9 +100,24 @@ class CategoryList(ListView):
 def CategoryAddHandler(request):
     if request.method == 'POST':
         cate = Category()
+        cate.id = GetIDBasedOnTime()
         cate.name = request.POST.get('new_cate', ' ')
         cate.save()
 
+    return HttpResponseRedirect('/admin/attr/category')
+
+
+def CategoryEditHandler(request):
+    if request.method == 'POST':
+        cate = Category.objects.get(id=request.POST.get('id'))
+        cate.name = request.POST.get('name')
+        cate.save()
+    return HttpResponseRedirect('/admin/attr/category')
+
+
+def CategoryDelHandler(request):
+    if request.method == 'POST':
+        Category.objects.get(id=request.POST.get('id')).delete()
     return HttpResponseRedirect('/admin/attr/category')
 
 
@@ -114,8 +133,25 @@ class TagList(ListView):
 def TagAddHandler(request):
     if request.method == 'POST':
         tag = Tag()
+        tag.id = GetIDBasedOnTime()
         tag.name = request.POST.get('new_tag', ' ')
         tag.save()
 
     return HttpResponseRedirect('/admin/attr/tag')
+
+
+def TagEditHandler(request):
+    if request.method == 'POST':
+        tag = Tag.objects.get(id=request.POST.get('id'))
+        tag.name = request.POST.get('name')
+        tag.save()
+    return HttpResponseRedirect('/admin/attr/tag')
+
+
+def TagDelHandler(request):
+    if request.method == 'POST':
+        Tag.objects.get(id=request.POST.get('id')).delete()
+    return HttpResponseRedirect('/admin/attr/Tag')
+
+
 
