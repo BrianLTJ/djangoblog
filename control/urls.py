@@ -11,5 +11,7 @@ urlpatterns = [
     url(r'^/article/recycle$', views.ArticleRecycle.as_view(), name='article_recycle'),
     url(r'^/article/edit/(?P<article_id>\d+)$', views.ArticleEdit.as_view(), name='article_edit'),
     url(r'^/attr/category$', views.CategoryList.as_view(), name='attr_category'),
+    url(r'^/attr/category/add_handler$', views.CategoryAddHandler, name='attr_category_add_handler'),
     url(r'^/attr/tag$', views.TagList.as_view(), name='attr_tag'),
+    url(r'^/attr/tag/add_handler$', views.TagAddHandler, name='attr_tag_add_handler'),
 ]

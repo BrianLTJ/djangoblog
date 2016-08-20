@@ -12,4 +12,13 @@
             {% endfor %}
         </ul>
     </div>
+    <div>
+    <h3>添加分类</h3>
+        <form action="{% url 'control:attr_category_add_handler' %}" method="post">
+            <label for="">分类名称</label>
+            <input type="text" name="new_cate">
+            {% csrf_token %}
+            <input type="submit">
+        </form>
+    </div>
 {% endblock %}

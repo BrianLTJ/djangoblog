@@ -93,6 +93,15 @@ class CategoryList(ListView):
         return category_list
 
 
+def CategoryAddHandler(request):
+    if request.method == 'POST':
+        cate = Category()
+        cate.name = request.POST.get('new_cate', ' ')
+        cate.save()
+
+    return HttpResponseRedirect('/admin/attr/category')
+
+
 class TagList(ListView):
     model = Tag
     template_name = 'control/attr/tag.html'
@@ -100,4 +109,13 @@ class TagList(ListView):
     def get_queryset(self):
         tag_list = Tag.objects.all()
         return tag_list
+
+
+def TagAddHandler(request):
+    if request.method == 'POST':
+        tag = Tag()
+        tag.name = request.POST.get('new_tag', ' ')
+        tag.save()
+
+    return HttpResponseRedirect('/admin/attr/tag')
 

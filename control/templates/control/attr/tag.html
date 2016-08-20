@@ -9,7 +9,15 @@
             <li>{{ tag.name }}</li>
         {% endfor %}
     </ul>
-
+    </div>
+    <div>
+    <h3>添加标签</h3>
+        <form action="{% url 'control:attr_tag_add_handler' %}" method="post">
+            <label for="">标签名称</label>
+            <input type="text" name="new_tag">
+            {% csrf_token %}
+            <input type="submit">
+        </form>
     </div>
 
 {% endblock %}
