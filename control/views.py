@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from django.conf.urls import url
 from django.http import HttpResponseRedirect, Http404
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
@@ -35,7 +34,8 @@ def ArticleList(request, page_type):
 
 def ArticleAdd(request):
     category = Category.objects.all()
-    context = {'category_list': category, 'pageattr': 'n'}
+    tag = Tag.objects.all()
+    context = {'category_list': category, 'pageattr': 'n', 'tag_list': tag}
     return render(request, 'control/article/content.html', context)
 
 
@@ -48,6 +48,10 @@ def ArticleAddHandler(request):
         article.abstract = request.POST.get('abstract', ' ')
         article.body = request.POST.get('body', ' ')
         article.category = Category.objects.get(id=int(request.POST.get('category')))
+        article.save()
+        tags = request.POST.getlist('tags[]')
+        for tag in tags:
+            article.tags.add(Tag.objects.get(id=tag))
         article.save()
 
     return HttpResponseRedirect('/admin/article/all')
@@ -67,6 +71,7 @@ class ArticleEdit(DetailView):
     def get_context_data(self, **kwargs):
         kwargs['pageattr'] = 'e'
         kwargs['category_list'] = Category.objects.all()
+        kwargs['tag_list'] = Tag.objects.all()
         return super(ArticleEdit, self).get_context_data(**kwargs)
 
 
@@ -78,6 +83,10 @@ def ArticleEditHandler(request):
         article.status = request.POST.get('status', 'd')
         article.body = request.POST.get('body', ' ')
         article.category = Category.objects.get(id=int(request.POST.get('category')))
+        tags = request.POST.getlist('tags[]')
+        article.tags.clear()
+        for tag in tags:
+            article.tags.add(Tag.objects.get(id=tag))
         article.save()
 
     return HttpResponseRedirect('/admin/article/all')
@@ -106,7 +115,7 @@ def ArticlePublishHandler(request, article_id):
     article = Article.objects.get(id=article_id)
     article.status = 'p'
     article.save()
-    return HttpResponseRedirect('/admin/article/publish')
+    return HttpResponseRedirect('/admin/article/published')
 
 
 class CategoryList(ListView):
@@ -173,6 +182,5 @@ def TagDelHandler(request):
     if request.method == 'POST':
         Tag.objects.get(id=request.POST.get('id')).delete()
     return HttpResponseRedirect('/admin/attr/Tag')
-
 
 

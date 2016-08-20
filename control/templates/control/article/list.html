@@ -23,7 +23,7 @@
         <a href="{% url 'control:article_edit' article.pk %}">编辑</a>
         {% if article.status == 'd' %}
             <a href="{% url 'control:article_publish_handler' article.pk %}">发布</a>
-        <a href="{% url 'control:article_recycle_handler' article.pk %}">移入回收站</a>
+            <a href="{% url 'control:article_recycle_handler' article.pk %}">移入回收站</a>
         {% elif article.status == 'p' %}
             <a href="{% url 'control:article_restore_handler' article.pk %}">放入草稿</a>
             <a href="{% url 'control:article_recycle_handler' article.pk %}">移入回收站</a>

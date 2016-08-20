@@ -27,11 +27,8 @@ class IndexView(ListView):
 
 class ArticleDetailView(DetailView):
     model = Article
-
     template_name = "blog/detail.html"
-
     context_object_name = 'article'
-
     pk_url_kwarg = 'article_id'
 
     def get_object(self):

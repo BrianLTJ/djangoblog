@@ -18,6 +18,19 @@
         </select>
     </div>
     <div>
+        <label for="">标签</label>
+        <div>
+            <ul id="tag_select_area"></ul>
+            <select name="" id="tag_select">
+                <option value="">---</option>
+                {% for tag in tag_list %}
+                    <option value="{{ tag.id }}">{{ tag.name }}</option>
+                {% endfor %}
+            </select>
+            <button type="button" onclick="FetchTagValue()">添加</button>
+        </div>
+    </div>
+    <div>
         <label for="">状态</label>
         <select name="status" id="">
         <option value="d" {% if article.status == 'd' or pageattr == 'n' %}selected{% endif %}>草稿</option>
@@ -46,5 +59,32 @@
         <input type="submit">
     </form>
 
+    <script>
+    function AddTag(id, name) {
+        var tagnode = document.createElement("li");
+        tagnode.textContent = name;
+        document.getElementById("tag_select_area").appendChild(tagnode);
+        var tagnodeinput = document.createElement("input");
+        tagnodeinput.name = "tags[]";
+        tagnodeinput.type = "hidden";
+        tagnodeinput.value = id;
+        tagnode.appendChild(tagnodeinput);
+        var tagnoderemove = document.createElement("button");
+        tagnoderemove.innerText = "x";
+        tagnoderemove.class = "tag-remove";
+        tagnoderemove.type = "button";
+        tagnode.appendChild(tagnoderemove);
+    }
+    function FetchTagValue(){
+        var selector = document.getElementById("tag_select");
+        var index = selector.selectedIndex;
+        var text = selector.options[index].text;
+        var value = selector.options[index].value;
+        AddTag(value, text);
+    }
+    function RemoveTag(self) {
+
+    }
+    </script>
 
 {% endblock %}
