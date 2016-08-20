@@ -1,0 +1,50 @@
+{% extends 'control/base.html' %}
+{% block PAGE_TITLE %}{% if pageattr == 'n' %}新增文章{% elif pageattr == 'e' %}编辑文章{% endif %}{% endblock %}
+{% block main %}
+    <h2>{% if pageattr == 'n' %}新增文章{% elif pageattr == 'e' %}编辑文章{% endif %}</h2>
+    <form action="{% if pageattr == 'n' %}{% url 'control:article_add_handler' %}{% elif pageattr == 'e' %}{% url 'control:article_edit_handler' %}{% endif %}" method="post">
+    {% if pageattr == 'e' %} <input type="hidden" name="id" value="{{ article.id }}" >{% endif %}
+        <div>
+    <label for="">标题</label>
+    <input type="text" name="title" value="{% if pageattr == 'e' %}{{ article.title }}{% endif %}">
+    </div>
+    <div>
+        <label for="">分类</label>
+        <select name="category" id="">
+            <option value="">------</option>
+            {% for cate in category_list %}
+                <option value="{{ cate.id }}" {% if pageattr == 'e' and article.category_id == cate.id %}selected{% endif %}>{{ cate.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div>
+        <label for="">状态</label>
+        <select name="status" id="">
+        <option value="d" {% if article.status == 'd' or pageattr == 'n' %}selected{% endif %}>草稿</option>
+        <option value="p" {% if pageattr == 'e' and article.status == 'p' %}selected{% endif %}>发布</option>
+        <option value="r" {% if pageattr == 'e' and article.status == 'r' %}selected{% endif %}>回收站</option>
+    </select>
+    </div>
+    <div>
+        <div>摘要</div>
+        <div>
+            <textarea name="abstract" id="" cols="100" rows="10">{% if pageattr == 'e' %}{{ article.abstract }}{% endif %}</textarea>
+        </div>
+    </div>
+    <div>
+        <div>正文</div>
+        <div>
+            <textarea name="body" id="" cols="100" rows="20">{% if pageattr == 'e' %}{{ article.body }}{% endif %}</textarea>
+        </div>
+
+    </div>
+    {% if pageattr == 'e' %}
+        <div>上次修改时间：&nbsp;{{ article.last_modified_time|date:'Y-m-d h:i:s' }}</div>
+        <div>创建时间：&nbsp;{{ article.created_time|date:'Y-m-d h:i:s' }}</div>
+    {% endif %}
+    {% csrf_token %}
+        <input type="submit">
+    </form>
+
+
+{% endblock %}

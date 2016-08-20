@@ -17,36 +17,6 @@ def Index(request):
     return render(request, 'control/base.html')
 
 
-def ArticleAdd(request):
-    category = Category.objects.all()
-    context = {'category': category, 'pageattr': 'n'}
-    return render(request, 'control/article/add.html', context)
-
-
-def ArticleAddHandler(request):
-    if request.method == 'POST':
-        article = Article()
-        article.id = GetIDBasedOnTime()
-        article.title = request.POST.get('title', ' ')
-        article.abstract = request.POST.get('abstract', ' ')
-        article.body = request.POST.get('body', ' ')
-        article.category = Category.objects.get(id=int(request.POST.get('category')))
-        article.save()
-
-    return HttpResponseRedirect()
-
-
-def ArticleEditHandler(request):
-    if request.method == 'POST':
-        article = Article.objects.get(id=request.POST.get('id'))
-        article.title = request.POST.get('title', ' ')
-        article.abstract = request.POST.get('abstract', ' ')
-        article.body = request.POST.get('body', ' ')
-        article.category = Category.objects.get(id=int(request.POST.get('category')))
-
-    return HttpResponseRedirect(url())
-
-
 def ArticleList(request, page_type):
     if page_type == 'all':
         article_list = Article.objects.all()
@@ -63,9 +33,29 @@ def ArticleList(request, page_type):
     return render(request, 'control/article/list.html', context)
 
 
+def ArticleAdd(request):
+    category = Category.objects.all()
+    context = {'category': category, 'pageattr': 'n'}
+    return render(request, 'control/article/content.html', context)
+
+
+def ArticleAddHandler(request):
+    if request.method == 'POST':
+        article = Article()
+        article.id = GetIDBasedOnTime()
+        article.title = request.POST.get('title', ' ')
+        article.status = request.POST.get('status', 'd')
+        article.abstract = request.POST.get('abstract', ' ')
+        article.body = request.POST.get('body', ' ')
+        article.category = Category.objects.get(id=int(request.POST.get('category')))
+        article.save()
+
+    return HttpResponseRedirect()
+
+
 class ArticleEdit(DetailView):
     model = Article
-    template_name = "control/article/edit.html"
+    template_name = "control/article/content.html"
     context_object_name = 'article'
     pk_url_kwarg = 'article_id'
 
@@ -73,6 +63,24 @@ class ArticleEdit(DetailView):
         obj = super(ArticleEdit, self).get_object()
         obj.body = markdown2.markdown(obj.body)
         return obj
+
+    def get_context_data(self, **kwargs):
+        kwargs['pageattr'] = 'e'
+        kwargs['category_list'] = Category.objects.all()
+        return super(ArticleEdit, self).get_context_data(**kwargs)
+
+
+def ArticleEditHandler(request):
+    if request.method == 'POST':
+        article = Article.objects.get(id=request.POST.get('id'))
+        article.title = request.POST.get('title', ' ')
+        article.abstract = request.POST.get('abstract', ' ')
+        article.status = request.POST.get('status', 'd')
+        article.body = request.POST.get('body', ' ')
+        article.category = Category.objects.get(id=int(request.POST.get('category')))
+        article.save()
+
+    return HttpResponseRedirect('/admin/article/all')
 
 
 class CategoryList(ListView):
