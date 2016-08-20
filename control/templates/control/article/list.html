@@ -16,8 +16,8 @@
 <tr>
     <td>{{ article.title }}</td>
     <td>{{ article.body |safe }}</td>
-    <td>{{ article.created_time |date:'Y-m-d h:m:s' }}</td>
-    <td>{{ article.last_modified_time |date:'Y-m-d h:m:s' }}</td>
+    <td>{{ article.created_time |date:'Y-m-d H:m:s' }}</td>
+    <td>{{ article.last_modified_time |date:'Y-m-d H:m:s' }}</td>
     <td>{% if article.status == 'p' %}已发布{% elif article.status == 'd' %}草稿{% elif article.status == 'r' %}回收站{% endif %}</td>
     <td>
         <a href="{% url 'control:article_edit' article.pk %}">编辑</a>

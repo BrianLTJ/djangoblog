@@ -21,8 +21,8 @@
                 <tr>
                     <td>{{ cate.id }}</td>
                     <td>{{ cate.name }}</td>
-                    <td>{{ cate.created_time|date:'Y-m-d h:i:s' }}</td>
-                    <td>{{ cate.last_modified_time|date:'Y-m-d h:i:s' }}</td>
+                    <td>{{ cate.created_time|date:'Y-m-d H:i:s' }}</td>
+                    <td>{{ cate.last_modified_time|date:'Y-m-d H:i:s' }}</td>
                     <td>
                         <form action="{% url 'control:attr_category_edit_handler' %}" method="post">
                             {% csrf_token %}

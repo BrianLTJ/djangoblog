@@ -92,21 +92,21 @@ def ArticleRecycleHandler(request, article_id):
     article = Article.objects.get(id=article_id)
     article.status = 'r'
     article.save()
-    return HttpResponseRedirect('/admin/article/all')
+    return HttpResponseRedirect('/admin/article/recycle')
 
 
 def ArticleRestoreToDraftHandler(request, article_id):
     article = Article.objects.get(id=article_id)
     article.status = 'd'
     article.save()
-    return HttpResponseRedirect('/admin/article/all')
+    return HttpResponseRedirect('/admin/article/draft')
 
 
 def ArticlePublishHandler(request, article_id):
     article = Article.objects.get(id=article_id)
     article.status = 'p'
     article.save()
-    return HttpResponseRedirect('/admin/article/all')
+    return HttpResponseRedirect('/admin/article/publish')
 
 
 class CategoryList(ListView):

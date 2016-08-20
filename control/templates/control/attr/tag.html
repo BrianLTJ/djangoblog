@@ -20,8 +20,8 @@
                 <tr>
                     <td>{{ tag.id }}</td>
                     <td>{{ tag.name }}</td>
-                    <td>{{ tag.created_time|date:'Y-m-d h:i:s' }}</td>
-                    <td>{{ tag.last_modified_time|date:'Y-m-d h:i:s' }}</td>
+                    <td>{{ tag.created_time|date:'Y-m-d H:i:s' }}</td>
+                    <td>{{ tag.last_modified_time|date:'Y-m-d H:i:s' }}</td>
                     <td>
                         <form action="{% url 'control:attr_tag_edit_handler' %}" method="post">
                             {% csrf_token %}
