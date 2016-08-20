@@ -1,0 +1,15 @@
+{% extends 'control/base.html' %}
+{% block PAGE_TITLE %}分类{% endblock %}
+{% block main %}
+    <h2>分类</h2>
+    <div>
+    <h3>分类列表</h3>
+    </div>
+    <div>
+        <ul>
+            {% for cate in category_list %}
+            <li>{{ cate.name }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

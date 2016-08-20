@@ -1,0 +1,15 @@
+{% extends 'control/base.html' %}
+{% block PAGE_TITLE %}标签{% endblock %}
+{% block main %}
+    <h2>标签列表</h2>
+    <div><h3>所有标签</h3></div>
+    <div>
+    <ul>
+        {% for tag in tag_list %}
+            <li>{{ tag.name }}</li>
+        {% endfor %}
+    </ul>
+
+    </div>
+
+{% endblock %}

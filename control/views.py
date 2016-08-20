@@ -8,6 +8,9 @@ import time
 from datetime import datetime, date
 
 # Create your views here.
+def Index(request):
+    return render(request, 'control/base.html')
+
 def ArticleAdd(request):
     category = Category.objects.all()
     context = {'category': category}
@@ -79,3 +82,22 @@ class ArticleEdit(DetailView):
         obj = super(ArticleEdit, self).get_object()
         obj.body = markdown2.markdown(obj.body)
         return obj
+
+
+class CategoryList(ListView):
+    model = Category
+    template_name = 'control/attr/category.html'
+
+    def get_queryset(self):
+        category_list = Category.objects.all()
+        return category_list
+
+
+class TagList(ListView):
+    model = Tag
+    template_name = 'control/attr/tag.html'
+
+    def get_queryset(self):
+        tag_list = Tag.objects.all()
+        return tag_list
+
