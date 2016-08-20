@@ -35,7 +35,7 @@ def ArticleList(request, page_type):
 
 def ArticleAdd(request):
     category = Category.objects.all()
-    context = {'category': category, 'pageattr': 'n'}
+    context = {'category_list': category, 'pageattr': 'n'}
     return render(request, 'control/article/content.html', context)
 
 
@@ -50,7 +50,7 @@ def ArticleAddHandler(request):
         article.category = Category.objects.get(id=int(request.POST.get('category')))
         article.save()
 
-    return HttpResponseRedirect()
+    return HttpResponseRedirect('/admin/article/all')
 
 
 class ArticleEdit(DetailView):
@@ -80,6 +80,32 @@ def ArticleEditHandler(request):
         article.category = Category.objects.get(id=int(request.POST.get('category')))
         article.save()
 
+    return HttpResponseRedirect('/admin/article/all')
+
+
+def ArticleDelHandler(request, article_id):
+    Article.objects.get(id=article_id).delete()
+    return HttpResponseRedirect('/admin/article/all')
+
+
+def ArticleRecycleHandler(request, article_id):
+    article = Article.objects.get(id=article_id)
+    article.status = 'r'
+    article.save()
+    return HttpResponseRedirect('/admin/article/all')
+
+
+def ArticleRestoreToDraftHandler(request, article_id):
+    article = Article.objects.get(id=article_id)
+    article.status = 'd'
+    article.save()
+    return HttpResponseRedirect('/admin/article/all')
+
+
+def ArticlePublishHandler(request, article_id):
+    article = Article.objects.get(id=article_id)
+    article.status = 'p'
+    article.save()
     return HttpResponseRedirect('/admin/article/all')
 
 

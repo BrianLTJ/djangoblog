@@ -19,7 +19,19 @@
     <td>{{ article.created_time |date:'Y-m-d h:m:s' }}</td>
     <td>{{ article.last_modified_time |date:'Y-m-d h:m:s' }}</td>
     <td>{% if article.status == 'p' %}已发布{% elif article.status == 'd' %}草稿{% elif article.status == 'r' %}回收站{% endif %}</td>
-    <td><a href="{% url 'control:article_edit' article.pk %}">编辑</a></td>
+    <td>
+        <a href="{% url 'control:article_edit' article.pk %}">编辑</a>
+        {% if article.status == 'd' %}
+            <a href="{% url 'control:article_publish_handler' article.pk %}">发布</a>
+        <a href="{% url 'control:article_recycle_handler' article.pk %}">移入回收站</a>
+        {% elif article.status == 'p' %}
+            <a href="{% url 'control:article_restore_handler' article.pk %}">放入草稿</a>
+            <a href="{% url 'control:article_recycle_handler' article.pk %}">移入回收站</a>
+        {% elif article.status == 'r' %}
+            <a href="{% url 'control:article_restore_handler' article.pk %}">恢复到草稿</a>
+            <a href="{% url 'control:article_del_handler' article.pk %}">彻底删除</a>
+        {% endif %}
+    </td>
 </tr>
     {% endfor %}
 </table>
