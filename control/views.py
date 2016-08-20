@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
+from django.conf.urls import url
+from django.http import HttpResponseRedirect, Http404
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from blog.models import Article, Category, Tag
@@ -15,9 +16,10 @@ def GetIDBasedOnTime():
 def Index(request):
     return render(request, 'control/base.html')
 
+
 def ArticleAdd(request):
     category = Category.objects.all()
-    context = {'category': category}
+    context = {'category': category, 'pageattr': 'n'}
     return render(request, 'control/article/add.html', context)
 
 
@@ -25,55 +27,40 @@ def ArticleAddHandler(request):
     if request.method == 'POST':
         article = Article()
         article.id = GetIDBasedOnTime()
-        article.title = request.POST.get('title', '')
-        article.body = request.POST.get('body', '')
+        article.title = request.POST.get('title', ' ')
+        article.abstract = request.POST.get('abstract', ' ')
+        article.body = request.POST.get('body', ' ')
         article.category = Category.objects.get(id=int(request.POST.get('category')))
         article.save()
 
-    return HttpResponseRedirect('/admin/article/add')
+    return HttpResponseRedirect()
 
 
-class ArticleAll(ListView):
-    template_name = 'control/article/all.html'
-    model = Article
+def ArticleEditHandler(request):
+    if request.method == 'POST':
+        article = Article.objects.get(id=request.POST.get('id'))
+        article.title = request.POST.get('title', ' ')
+        article.abstract = request.POST.get('abstract', ' ')
+        article.body = request.POST.get('body', ' ')
+        article.category = Category.objects.get(id=int(request.POST.get('category')))
 
-    def get_queryset(self):
+    return HttpResponseRedirect(url())
+
+
+def ArticleList(request, page_type):
+    if page_type == 'all':
         article_list = Article.objects.all()
-        for article in article_list:
-            article.body = markdown2.markdown(article.body, )
-        return article_list
-
-class ArticlePublished(ListView):
-    template_name = 'control/article/published.html'
-    model = Article
-
-    def get_queryset(self):
-        article_list = Article.objects.filter(status='p')
-        for article in article_list:
-            article.body = markdown2.markdown(article.body, )
-        return article_list
-
-
-class ArticleDraft(ListView):
-    template_name = 'control/article/draft.html'
-    model = Article
-
-    def get_queryset(self):
+    elif page_type == 'draft':
         article_list = Article.objects.filter(status='d')
-        for article in article_list:
-            article.body = markdown2.markdown(article.body, )
-        return article_list
-
-
-class ArticleRecycle(ListView):
-    template_name = 'control/article/recycle.html'
-    model = Article
-
-    def get_queryset(self):
+    elif page_type == 'published':
+        article_list = Article.objects.filter(status='p')
+    elif page_type == 'recycle':
         article_list = Article.objects.filter(status='r')
-        for article in article_list:
-            article.body = markdown2.markdown(article.body, )
-        return article_list
+    else:
+        return Http404
+
+    context = {'article_list': article_list, 'list_type': page_type[0:1]}
+    return render(request, 'control/article/list.html', context)
 
 
 class ArticleEdit(DetailView):
@@ -100,7 +87,7 @@ class CategoryList(ListView):
 def CategoryAddHandler(request):
     if request.method == 'POST':
         cate = Category()
-        cate.id = GetIDBasedOnTime()
+        # cate.id = GetIDBasedOnTime()
         cate.name = request.POST.get('new_cate', ' ')
         cate.save()
 
@@ -133,7 +120,7 @@ class TagList(ListView):
 def TagAddHandler(request):
     if request.method == 'POST':
         tag = Tag()
-        tag.id = GetIDBasedOnTime()
+        # tag.id = GetIDBasedOnTime()
         tag.name = request.POST.get('new_tag', ' ')
         tag.save()
 

@@ -1,8 +1,8 @@
 {% extends 'control/base.html' %}
-{% block PAGE_TITLE %}回收站{% endblock %}
+{% block PAGE_TITLE %}{% if list_type == 'a' %}所有文章{% elif list_type == 'p' %}已发布{% elif list_type == 'd' %}草稿{% elif list_type == 'r' %}回收站{% endif %}{% endblock %}
 {% block main %}
 
-    <h2>回收站</h2>
+    <h2>{% if list_type == 'a' %}所有文章{% elif list_type == 'p' %}已发布{% elif list_type == 'd' %}草稿{% elif list_type == 'r' %}回收站{% endif %}</h2>
 <table>
 <thead>
     <td>标题</td>
