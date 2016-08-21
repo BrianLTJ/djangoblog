@@ -20,7 +20,13 @@
     <div>
         <label for="">标签</label>
         <div>
-            <ul id="tag_select_area"></ul>
+            <ul id="tag_select_area">
+                {% if pageattr == 'e' %}
+                    {% for tag in article.tags.all %}
+                        <li tagval="{{ tag.id }}" class="tags">{{ tag.name }}<input type="hidden" name="tags[]" value="{{ tag.id }}"><button type="button" onclick="RemoveTag(this)">x</button></li>
+                    {% endfor %}
+                {% endif %}
+            </ul>
             <select name="" id="tag_select">
                 <option value="">---</option>
                 {% for tag in tag_list %}
@@ -60,20 +66,27 @@
     </form>
 
     <script>
+    function RemoveTag(elem) {
+        elem.parentNode.parentNode.removeChild(elem.parentNode);
+    }
     function AddTag(id, name) {
-        var tagnode = document.createElement("li");
-        tagnode.textContent = name;
-        document.getElementById("tag_select_area").appendChild(tagnode);
-        var tagnodeinput = document.createElement("input");
-        tagnodeinput.name = "tags[]";
-        tagnodeinput.type = "hidden";
-        tagnodeinput.value = id;
-        tagnode.appendChild(tagnodeinput);
-        var tagnoderemove = document.createElement("button");
-        tagnoderemove.innerText = "x";
-        tagnoderemove.class = "tag-remove";
-        tagnoderemove.type = "button";
-        tagnode.appendChild(tagnoderemove);
+        if(id != null){
+            var all_tags = document.getElementsByClassName("tags");
+            var ifexist = false;
+            for(var i=0;i< all_tags.length;i++){
+                if(all_tags[i].getAttribute("tagval")==id.toString()){
+                    ifexist = true;
+                    break;
+                }
+            }
+            if(ifexist==false){
+                var tagnode = document.createElement("li");
+                tagnode.setAttribute("tagval", id);
+                tagnode.className = "tags";
+                tagnode.innerHTML = name.toString()+"<input type='hidden' name='tags[]' value='"+id.toString()+"'><button type='button' onclick='RemoveTag(this)'>x</button>";
+                document.getElementById("tag_select_area").appendChild(tagnode);
+            }
+        }
     }
     function FetchTagValue(){
         var selector = document.getElementById("tag_select");
@@ -82,9 +95,7 @@
         var value = selector.options[index].value;
         AddTag(value, text);
     }
-    function RemoveTag(self) {
 
-    }
     </script>
 
 {% endblock %}
