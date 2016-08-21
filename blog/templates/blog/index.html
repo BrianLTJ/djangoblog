@@ -3,12 +3,23 @@
 {% load paginate_tags %}
 {% paginate article_list 5 %}
 
+    <p>置顶文章</p>
 {% for article in article_list %}
+    {% if article.topped == True %}
     <h1>
         <a href="{% url 'blog:detail' article.pk %}">{{ article.title }}</a>
     </h1>
+    {% endif %}
 {% endfor %}
 
+    <p>普通文章</p>
+{% for article in article_list %}
+    {% if article.topped == False %}
+    <h1>
+        <a href="{% url 'blog:detail' article.pk %}">{{ article.title }}</a>
+    </h1>
+    {% endif %}
+{% endfor %}
 
 {% include 'blog/pagination.html' %}
 

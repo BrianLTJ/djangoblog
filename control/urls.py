@@ -19,10 +19,14 @@ urlpatterns = [
     url(r'^/article/handle/publish/(?P<article_id>\d+)', views.ArticlePublishHandler, name='article_publish_handler'),
     url(r'^/article/handle/restore/(?P<article_id>\d+)', views.ArticleRestoreToDraftHandler, name='article_restore_handler'),
 
+    url(r'^/article/handler/top/(?P<article_id>\d+)', views.ArticleTopHandler, name='article_top_handler'),
+    url(r'^/article/handler/untop/(?P<article_id>\d+)', views.ArticleUnTopHandler, name='article_untop_handler'),
+
     url(r'^/attr/category$', views.CategoryList.as_view(), name='attr_category'),
     url(r'^/attr/category/handler/add$', views.CategoryAddHandler, name='attr_category_add_handler'),
     url(r'^/attr/category/handler/edit$', views.CategoryEditHandler, name='attr_category_edit_handler'),
     url(r'^/attr/category/handler/del$', views.CategoryDelHandler, name='attr_category_del_handler'),
+
     url(r'^/attr/tag$', views.TagList.as_view(), name='attr_tag'),
     url(r'^/attr/tag/handler/add$', views.TagAddHandler, name='attr_tag_add_handler'),
     url(r'^/attr/tag/handler/edit$', views.TagEditHandler, name='attr_tag_edit_handler'),

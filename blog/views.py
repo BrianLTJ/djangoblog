@@ -12,7 +12,7 @@ class IndexView(ListView):
     context_object_name = "article_list"
 
     def get_queryset(self):
-        article_list = Article.objects.filter(status='p')
+        article_list = Article.objects.filter(status='p').order_by('last_modified_time')
         for article in article_list:
             article.body = markdown2.markdown(article.body, )
         return article_list

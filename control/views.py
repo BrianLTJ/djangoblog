@@ -118,6 +118,22 @@ def ArticlePublishHandler(request, article_id):
     return HttpResponseRedirect('/admin/article/published')
 
 
+# 文章置顶
+def ArticleTopHandler(request, article_id):
+    article = Article.objects.get(id=article_id)
+    article.topped = True
+    article.save()
+    return HttpResponseRedirect('/admin/article/published')
+
+
+# 文章取消置顶
+def ArticleUnTopHandler(request, article_id):
+    article = Article.objects.get(id=article_id)
+    article.topped = False
+    article.save()
+    return HttpResponseRedirect('/admin/article/published')
+
+
 class CategoryList(ListView):
     model = Category
     template_name = 'control/attr/category.html'
