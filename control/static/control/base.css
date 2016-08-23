@@ -1,0 +1,27 @@
+body {
+    background-color: #ecf0f1;
+}
+* {
+    font-family: "Lato", Helvetica, Arial, "微软雅黑", sans-serif;
+    font-size: 14px;
+}
+.page-nav {
+    color: #fff;
+    background-color: #212121;
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    height: 100%;
+    width: 64px;
+}
+
+.main {
+    width: 100%;
+    padding-left: 80px;
+    padding-right: 15px;
+    padding-top: 15px;
+}
+
+.btn-xs {
+    margin: 3px;
+}

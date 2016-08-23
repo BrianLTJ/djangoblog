@@ -1,59 +1,86 @@
 {% extends 'control/base.html' %}
 {% block PAGE_TITLE %}{% if pageattr == 'n' %}新增文章{% elif pageattr == 'e' %}编辑文章{% endif %}{% endblock %}
 {% block main %}
-    <h2>{% if pageattr == 'n' %}新增文章{% elif pageattr == 'e' %}编辑文章{% endif %}</h2>
-    <form action="{% if pageattr == 'n' %}{% url 'control:article_add_handler' %}{% elif pageattr == 'e' %}{% url 'control:article_edit_handler' %}{% endif %}" method="post">
+    <h3>{% if pageattr == 'n' %}新增文章{% elif pageattr == 'e' %}编辑文章{% endif %}</h3>
+    <form class="form-horizontal" action="{% if pageattr == 'n' %}{% url 'control:article_add_handler' %}{% elif pageattr == 'e' %}{% url 'control:article_edit_handler' %}{% endif %}" method="post">
+
     {% if pageattr == 'e' %} <input type="hidden" name="id" value="{{ article.id }}" >{% endif %}
-        <div>
-    <label for="">标题</label>
-    <input type="text" name="title" value="{% if pageattr == 'e' %}{{ article.title }}{% endif %}">
+    <!-- Title -->
+    <div class="row">
+        <div class="col-sm-2"><p>标题</p></div>
+        <div class="col-sm-10"> <input type="text" name="title" class="form-control input-sm" placeholder="标题" value="{% if pageattr == 'e' %}{{ article.title }}{% endif %}"></div>
     </div>
-    <div>
-        <label for="">分类</label>
-        <select name="category" id="">
-            <option value="">------</option>
-            {% for cate in category_list %}
-                <option value="{{ cate.id }}" {% if pageattr == 'e' and article.category_id == cate.id %}selected{% endif %}>{{ cate.name }}</option>
-            {% endfor %}
-        </select>
+    <!-- Title ends -->
+
+    <!-- Category, status -->
+    <div class="row">
+        <!-- Category -->
+        <div class="col-sm-2">
+            <p>分类</p>
+        </div>
+        <div class="col-sm-4">
+            <select name="category" id="" class="form-control select select-primary select-block mbl select-sm">
+                <option value="">------</option>
+                {% for cate in category_list %}
+                    <option value="{{ cate.id }}" {% if pageattr == 'e' and article.category_id == cate.id %}selected{% endif %}>{{ cate.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <!-- Category ends -->
+
+        <!-- Status -->
+        <div class="col-sm-2">
+            <p>状态</p>
+        </div>
+        <div class="col-sm-4">
+            <select name="status" id="" class="form-control select select-info select-block mbl select-sm">
+                <option value="d" {% if article.status == 'd' or pageattr == 'n' %}selected{% endif %}>草稿</option>
+                <option value="p" {% if pageattr == 'e' and article.status == 'p' %}selected{% endif %}>发布</option>
+                <option value="r" {% if pageattr == 'e' and article.status == 'r' %}selected{% endif %}>回收站</option>
+            </select>
+        </div>
+        <!-- Status ends -->
     </div>
-    <div>
-        <label for="">标签</label>
-        <div>
-            <ul id="tag_select_area">
-                {% if pageattr == 'e' %}
-                    {% for tag in article.tags.all %}
-                        <li tagval="{{ tag.id }}" class="tags">{{ tag.name }}<input type="hidden" name="tags[]" value="{{ tag.id }}"><button type="button" onclick="RemoveTag(this)">x</button></li>
-                    {% endfor %}
-                {% endif %}
-            </ul>
-            <select name="" id="tag_select">
+    <!-- Category, status ends -->
+    <!-- Tag -->
+    <div class="row">
+        <div class="col-sm-2">
+            <p>标签</p>
+        </div>
+        <div class="col-sm-10">
+            <!--标签选择-->
+            <select name="" class="form-control select select-success select-block mbl select-sm" id="tag_select" data-toggle="select">
                 <option value="">---</option>
                 {% for tag in tag_list %}
                     <option value="{{ tag.id }}">{{ tag.name }}</option>
                 {% endfor %}
             </select>
-            <button type="button" onclick="FetchTagValue()">添加</button>
+    &nbsp;
+            <button type="button" class="btn btn-success btn-sm" onclick="FetchTagValue()">添加</button>
         </div>
     </div>
-    <div>
-        <label for="">状态</label>
-        <select name="status" id="">
-        <option value="d" {% if article.status == 'd' or pageattr == 'n' %}selected{% endif %}>草稿</option>
-        <option value="p" {% if pageattr == 'e' and article.status == 'p' %}selected{% endif %}>发布</option>
-        <option value="r" {% if pageattr == 'e' and article.status == 'r' %}selected{% endif %}>回收站</option>
-    </select>
-    </div>
-    <div>
+     <div class="row">
+        <!-- 标签列表 -->
+        <div class="bootstrap-tagsinput" id="tag_select_area">
+            {% if pageattr == 'e' %}
+                {% for tag in article.tags.all %}
+                    <span tagval="{{ tag.id }}" class="tags tag label label-success">{{ tag.name }}<input type="hidden" name="tags[]" value="{{ tag.id }}"><span data-role="remove" onclick="RemoveTag(this)"></span></span>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+     </div>
+
+    <div class="row">
         <div>摘要</div>
         <div>
-            <textarea name="abstract" id="" cols="100" rows="10">{% if pageattr == 'e' %}{{ article.abstract }}{% endif %}</textarea>
+            <textarea name="abstract" id="" cols="50" rows="10">{% if pageattr == 'e' %}{{ article.abstract }}{% endif %}</textarea>
         </div>
     </div>
     <div>
         <div>正文</div>
         <div>
-            <textarea name="body" id="" cols="100" rows="20">{% if pageattr == 'e' %}{{ article.body }}{% endif %}</textarea>
+            <textarea name="body" id="" cols="50" rows="20">{% if pageattr == 'e' %}{{ article.body }}{% endif %}</textarea>
         </div>
 
     </div>
@@ -66,6 +93,7 @@
     </form>
 
     <script>
+
     function RemoveTag(elem) {
         elem.parentNode.parentNode.removeChild(elem.parentNode);
     }
@@ -80,10 +108,10 @@
                 }
             }
             if(ifexist==false){
-                var tagnode = document.createElement("li");
+                var tagnode = document.createElement("span");
                 tagnode.setAttribute("tagval", id);
-                tagnode.className = "tags";
-                tagnode.innerHTML = name.toString()+"<input type='hidden' name='tags[]' value='"+id.toString()+"'><button type='button' onclick='RemoveTag(this)'>x</button>";
+                tagnode.className = "tags tag label label-success";
+                tagnode.innerHTML = name.toString()+"<input type='hidden' name='tags[]' value='"+id.toString()+"'><span data-role='remove' onclick='RemoveTag(this)'></span>";
                 document.getElementById("tag_select_area").appendChild(tagnode);
             }
         }
@@ -95,7 +123,9 @@
         var value = selector.options[index].value;
         AddTag(value, text);
     }
-
+    require(['/static/lib/flatui/js/flat-ui.min.js'], function (flatui) {
+        $("select").select2({dropdownCssClass: 'dropdown-inverse'});
+    });
     </script>
 
 {% endblock %}
