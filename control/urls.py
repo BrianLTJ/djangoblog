@@ -3,6 +3,8 @@ from control import views
 
 urlpatterns = [
     url(r'^$', views.Index, name='control_index'),
+
+    url(r'^/article$', views.ArticleList, {'page_type': 'all'}, name='article_index'),
     url(r'^/article/handler/add$', views.ArticleAddHandler, name='article_add_handler'),
     url(r'^/article/add$', views.ArticleAdd, name='article_add'),
 
@@ -22,6 +24,7 @@ urlpatterns = [
     url(r'^/article/handler/top/(?P<article_id>\d+)', views.ArticleTopHandler, name='article_top_handler'),
     url(r'^/article/handler/untop/(?P<article_id>\d+)', views.ArticleUnTopHandler, name='article_untop_handler'),
 
+    url(r'^/attr$', views.CategoryList, name='attr_index'),
     url(r'^/attr/category$', views.CategoryList, name='attr_category'),
     url(r'^/attr/category/handler/add$', views.CategoryAddHandler, name='attr_category_add_handler'),
     url(r'^/attr/category/handler/edit$', views.CategoryEditHandler, name='attr_category_edit_handler'),

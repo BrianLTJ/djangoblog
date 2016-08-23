@@ -5,8 +5,8 @@
 {% block main %}
     <div class="btn-toolbar">
         <div class="btn-group">
-            <a class="btn btn-info" href="{% url 'control:attr_category' %}"><span class="glyphicon glyphicon-list-alt"></span>&nbsp; 分类</a>
-            <a class="btn btn-info active" href="{% url 'control:attr_tag' %}"><span class="glyphicon glyphicon-tags"></span>&nbsp; 标签</a>
+            <a class="btn btn-info {% if page_type == 'category' %}active{% endif %}" href="{% url 'control:attr_category' %}"><span class="glyphicon glyphicon-list-alt"></span>&nbsp; 分类</a>
+            <a class="btn btn-info {% if page_type == 'tag' %}active{% endif %}" href="{% url 'control:attr_tag' %}"><span class="glyphicon glyphicon-tags"></span>&nbsp; 标签</a>
         </div>
     </div>
     <div>
