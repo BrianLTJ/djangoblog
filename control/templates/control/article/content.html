@@ -1,6 +1,16 @@
 {% extends 'control/base.html' %}
 {% block PAGE_TITLE %}{% if pageattr == 'n' %}新增文章{% elif pageattr == 'e' %}编辑文章{% endif %}{% endblock %}
 {% block main %}
+    <div class="btn-toolbar">
+        <div class="btn-group">
+            <a href="{% url 'control:article_add' %}" class="btn btn-primary{% if pageattr == 'n' %} active{% endif %}"><span class="glyphicon glyphicon-plus"></span>&nbsp;添加</a>
+            <a href="{% url 'control:article_all' %}" class="btn btn-primary{% if list_type == 'a' %} active{% endif %}"><span class="glyphicon glyphicon-inbox"></span>&nbsp;所有</a>
+            <a href="{% url 'control:article_published' %}" class="btn btn-primary{% if list_type == 'p' %} active{% endif %}"><span class="glyphicon glyphicon-send"></span>&nbsp;已发布</a>
+            <a href="{% url 'control:article_draft' %}" class="btn btn-primary{% if list_type == 'd' %} active{% endif %}"><span class="glyphicon glyphicon-pencil"></span>&nbsp;草稿</a>
+            <a href="{% url 'control:article_recycle' %}" class="btn btn-primary{% if list_type == 'r' %} active{% endif %}"><span class="glyphicon glyphicon-trash"></span>&nbsp;回收站</a>
+        </div>
+    </div>
+
     <h3>{% if pageattr == 'n' %}新增文章{% elif pageattr == 'e' %}编辑文章{% endif %}</h3>
     <form class="form-horizontal" action="{% if pageattr == 'n' %}{% url 'control:article_add_handler' %}{% elif pageattr == 'e' %}{% url 'control:article_edit_handler' %}{% endif %}" method="post">
 

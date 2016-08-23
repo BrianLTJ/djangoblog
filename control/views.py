@@ -134,13 +134,17 @@ def ArticleUnTopHandler(request, article_id):
     return HttpResponseRedirect('/admin/article/published')
 
 
-class CategoryList(ListView):
-    model = Category
-    template_name = 'control/attr/category.html'
+'''
+文章标签、分类管理
+'''
 
-    def get_queryset(self):
-        category_list = Category.objects.all()
-        return category_list
+
+def CategoryList(request):
+    template_name = 'control/attr/list.html'
+
+    context = {'list': Category.objects.all(), 'page_type': 'category'}
+
+    return render(request, template_name, context)
 
 
 def CategoryAddHandler(request):
@@ -167,13 +171,12 @@ def CategoryDelHandler(request):
     return HttpResponseRedirect('/admin/attr/category')
 
 
-class TagList(ListView):
-    model = Tag
-    template_name = 'control/attr/tag.html'
+def TagList(request):
+    template_name = 'control/attr/list.html'
 
-    def get_queryset(self):
-        tag_list = Tag.objects.all()
-        return tag_list
+    context = {'list': Tag.objects.all(), 'page_type': 'tag'}
+
+    return render(request, template_name, context)
 
 
 def TagAddHandler(request):
