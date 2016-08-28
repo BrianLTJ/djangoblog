@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="/static/lib/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/lib/flatui/css/flat-ui.min.css">
     <link rel="stylesheet" href="/static/control/base.css">
+    {% block STYLE_SHEET %}{% endblock %}
     <title>{% block PAGE_TITLE %}{% endblock %}</title>
 </head>
 <body>
@@ -17,6 +18,7 @@
     <a class="page-nav-item" href="{% url 'control:control_index' %}" data-toggle="tooltip" data-placement="right" title="管理首页"><span class="fui-home"></span></a>
     <a class="page-nav-item" href="{% url 'control:article_index' %}" data-toggle="tooltip" data-placement="right" title="文章"><span class="fui-document"></span></a>
     <a class="page-nav-item" href="{% url 'control:attr_index' %}" data-toggle="tooltip" data-placement="right" title="文章属性"><span class="fui-tag"></span></a>
+    <a href="{% url 'control:control_logout_handler' %}">退出</a>
 </div>
 <div class="main">
 

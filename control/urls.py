@@ -4,6 +4,10 @@ from control import views
 urlpatterns = [
     url(r'^$', views.Index, name='control_index'),
 
+    url(r'^/login$', views.login_index, name='control_login_index'),
+    url(r'^/login/handler/login$', views.login_handler, name='control_login_handler'),
+    url(r'^/login/handler/logout$', views.logout_handler, name='control_logout_handler'),
+
     url(r'^/article$', views.ArticleList, {'page_type': 'all'}, name='article_index'),
     url(r'^/article/handler/add$', views.ArticleAddHandler, name='article_add_handler'),
     url(r'^/article/add$', views.ArticleAdd, name='article_add'),

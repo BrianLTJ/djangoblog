@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="styles/simditor.css" />
+
+<script type="text/javascript" src="scripts/jquery.min.js"></script>
+<script type="text/javascript" src="scripts/module.js"></script>
+<script type="text/javascript" src="scripts/hotkeys.js"></script>
+<script type="text/javascript" src="scripts/uploader.js"></script>
+<script type="text/javascript" src="scripts/simditor.js"></script>
+<script type="text/javascript" src="scripts/marked.js"></script>
+<script type="text/javascript" src="scripts/simditor-marked.js"></script>
+</head>
+<body>
+    <textarea id="editor" placeholder="" autofocus></textarea>
+    <button type="button" id="getHTML">获取html</button>
+    <textarea name="" id="htmlContent" cols="30" rows="10"></textarea>
+    <script>
+        var editor = new Simditor({
+  textarea: $('#editor'),
+   placeholder: '',
+  defaultImage: 'images/image.png',
+  params: {},
+  upload: false,
+  tabIndent: true,
+  toolbar: ['title', 'bold', 'italic', 'ol','ul','blockquote','code','link','marked'],
+  toolbarFloat: true,
+  toolbarFloatOffset: 0,
+  toolbarHidden: false,
+  pasteImage: false,
+  cleanPaste: false,
+  //optional options
+});
+    </script>
+    <script>
+        $("#getHTML").click(function(){
+            $("#htmlContent").val(editor.getValue());
+        });
+    </script>
+</body>
+</html>

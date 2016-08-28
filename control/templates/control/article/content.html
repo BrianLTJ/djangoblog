@@ -1,4 +1,8 @@
 {% extends 'control/base.html' %}
+{% block STYLE_SHEET %}
+    <link rel="stylesheet" href="/static/lib/simditor/styles/simditor.css">
+    <link rel="stylesheet" href="/static/lib/simditor/styles/simditor-markdown.css" media="screen" charset="utf-8">
+{% endblock %}
 {% block PAGE_TITLE %}{% if pageattr == 'n' %}新增文章{% elif pageattr == 'e' %}编辑文章{% endif %}{% endblock %}
 {% block main %}
     <div class="btn-toolbar">
@@ -84,13 +88,13 @@
     <div class="row">
         <div>摘要</div>
         <div>
-            <textarea name="abstract" id="" cols="50" rows="10">{% if pageattr == 'e' %}{{ article.abstract }}{% endif %}</textarea>
+            <textarea name="abstract" id="editor-abstract" cols="50" rows="5">{% if pageattr == 'e' %}{{ article.abstract }}{% endif %}</textarea>
         </div>
     </div>
     <div>
         <div>正文</div>
         <div>
-            <textarea name="body" id="" cols="50" rows="20">{% if pageattr == 'e' %}{{ article.body }}{% endif %}</textarea>
+            <textarea name="body" id="editor-body" cols="50" rows="20">{% if pageattr == 'e' %}{{ article.body }}{% endif %}</textarea>
         </div>
 
     </div>
@@ -103,6 +107,70 @@
     </form>
 
     <script>
+    /**
+     * USE Simditor
+     **/
+    /**
+    require.config({
+        paths: {
+            jquery: '/static/lib/js/jquery.min',
+            simditor: '/static/lib/simditor/scripts/simditor.min',
+            'simple-module': '/static/lib/simditor/scripts/module.min',
+            'simple-hotkeys': '/static/lib/simditor/scripts/hotkeys.min',
+            'simple-uploader': '/static/lib/simditor/scripts/uploader.min',
+            'simditor-marked': '/static/lib/simditor/scripts/simditor-marked',
+            'simditor-markdown': '/static/lib/simditor/scripts/simditor-markdown',
+            marked: '/static/lib/simditor/scripts/marked',
+            'to-markdown': '/static/lib/simditor/scripts/to-markdown'
+        }
+    });
+    // Import flatui
+    requirejs(['/static/lib/flatui/js/flat-ui.min.js'], function (flatui) {
+        $("select").select2({dropdownCssClass: 'dropdown-inverse'});
+    });
+
+    require(
+    [
+      'jquery',
+      'simditor',
+      'simditor-marked',
+            'simditor-markdown','marked','to-markdown'
+    ],function($, Simditor){
+      var editor_body = new Simditor({
+        textarea: $('#editor-body'),
+          markdown: true,
+        toolbar: [
+          'markdown',
+          'title',
+          'bold',
+          'italic',
+          'underline',
+          'strikethrough',
+          'fontScale',
+          'color',
+          'ol',
+          'ul',
+          'blockquote',
+          'code',
+          'table',
+          'link',
+          'image',
+          'hr',
+          'indent',
+          'outdent',
+          'alignment'
+        ]
+      });
+    });
+**/
+
+
+    /**
+     *  USE StackEdit as markdown editor
+     * @param elem
+     * @constructor
+     */
+
 
     function RemoveTag(elem) {
         elem.parentNode.parentNode.removeChild(elem.parentNode);
@@ -133,9 +201,6 @@
         var value = selector.options[index].value;
         AddTag(value, text);
     }
-    require(['/static/lib/flatui/js/flat-ui.min.js'], function (flatui) {
-        $("select").select2({dropdownCssClass: 'dropdown-inverse'});
-    });
     </script>
 
 {% endblock %}

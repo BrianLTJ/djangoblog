@@ -15,3 +15,7 @@
     - lib/js/require.min.js
     - 2.2.0
     - 2016-08-22 19:40:22
+- Simditor
+	- lib/simditor
+	- 2.3.6
+	- 2016-08-23 13:20:33
