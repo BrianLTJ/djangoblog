@@ -1,0 +1,19 @@
+{
+  "name": "django-blog-static",
+  "version": "1.9.0",
+  "description": "A django powered blog",
+  "main": "index.js",
+  "scripts": {
+    "test": "none"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BrianLTJ/djangoblog"
+  },
+  "author": "BrianLTJ",
+  "license": "ISC",
+  "dependencies": {
+    "materialize-css": "^0.97.8",
+    "vue": "^2.1.6"
+  }
+}
