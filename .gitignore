@@ -2,3 +2,7 @@ __pycache__
 db.sqlite3
 *.pyc
 .idea
+env
+venv
+node_modules
+static/npm-debug.log
