@@ -17,6 +17,10 @@ def post_detail_page(request, post_item_id):
     return render(request, 'post/post_detail.html', data)
 
 
+def post_new_post(request):
+    return render(request, 'post/post_detail.html')
+
+
 def post_cate_page(request):
     return render(request, 'post/post_cate.html')
 
