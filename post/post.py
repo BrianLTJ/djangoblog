@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from post.models import Article, Tag, Category
 
 
@@ -28,5 +28,17 @@ def post_cate_page(request):
 def post_tag_page(request):
     return render(request, 'post/post_tag.html')
 
+
+def post_add_handler(request):
+
+
+
+
+    resdata = dict()
+
+    resdata['status']='ok'
+    resdata['post_id']='test_post_id'
+
+    return render(request, 'post')
 
 

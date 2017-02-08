@@ -4,6 +4,11 @@ from django.db import models
 # Create your models here.
 class Article(models.Model):
     title = models.TextField('标题', null=True)
+    '''
+    美化URL
+    如, example.com/post/this-is-a-beautified-url
+    '''
+    beautified_url = models.TextField('美化URL', null=True)
     article_id = models.IntegerField('文章id', null=False)
     content = models.TextField('内容', null=True)
     content_type = models.CharField('内容类型', default='h',max_length=2)
@@ -55,4 +60,16 @@ class Tag(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Res_img(models.Model):
+    resid = models.TextField('资源id')
+    type = models.TextField('类型，尺寸，分辨率等')
+    uri = models.TextField('资源uri')
+
+    name = models.TextField('资源标题')
+    note = models.TextField('说明', null=True)
+    replace_text = models.TextField('替代文字', null=True)
+
+    add_time = models.DateTimeField(auto_created=True)
 

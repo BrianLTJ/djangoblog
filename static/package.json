@@ -1,0 +1,22 @@
+{
+  "name": "djangoblog",
+  "version": "1.0.0",
+  "description": "django-blog",
+  "main": "none",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BrianLTJ/djangoblog.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BrianLTJ/djangoblog/issues"
+  },
+  "homepage": "https://github.com/BrianLTJ/djangoblog#readme",
+  "dependencies": {
+    "jquery": "^3.1.1"
+  }
+}
