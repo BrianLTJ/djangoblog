@@ -1,7 +1,29 @@
 {% extends 'post/framework.html' %}
 {% block content %}
-<p>post detail</p>
-
+    <p>post detail</p>
 
     <p>Post id:{{ post_id }}</p>
+
+    <div>标题 <input type="text" name="title"></div>
+    <div>正文
+        <textarea name="detail" id="" cols="30" rows="10">
+
+        </textarea>
+    </div>
+
+    <div>
+        <p>文章状态:</p>
+        <p>可见性：</p>
+{#        <p>历史版本</p>#}
+
+    </div>
+
+    <div>
+        <p>分类</p>
+    </div>
+
+    <div>
+        <p>标签</p>
+    </div>
+
 {% endblock %}

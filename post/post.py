@@ -27,3 +27,6 @@ def post_cate_page(request):
 
 def post_tag_page(request):
     return render(request, 'post/post_tag.html')
+
+
+
