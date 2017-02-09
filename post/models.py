@@ -31,7 +31,7 @@ class Article(models.Model):
     根据文字内容等生产的hash
     未来与历史版本功能一起
     '''
-    hash = models.CharField('文章hash code', max_length=10, null=True)
+    hash = models.CharField('文章hash code', max_length=20, null=True)
     top = models.BooleanField('是否置顶', default=False)
 
     category = models.ForeignKey('Category', null=True)
@@ -63,7 +63,7 @@ class Tag(models.Model):
 
 
 class Res_img(models.Model):
-    resid = models.TextField('资源id')
+    resid = models.CharField('资源id', max_length=40)
     type = models.TextField('类型，尺寸，分辨率等')
     uri = models.TextField('资源uri')
 
@@ -73,3 +73,7 @@ class Res_img(models.Model):
 
     add_time = models.DateTimeField(auto_created=True)
 
+
+class Config(models.Model):
+    name = models.CharField('配置名称', max_length=40)
+    value = models.TextField('值', null=True)

@@ -3,12 +3,12 @@
 {% block content %}
     <p>post detail</p>
 
-    <form action="{% url 'dashboard_new_post_handler' %}">
-        {% csrf_token %}
+    <form action="{% url 'dashboard_new_post_handler' %}" id="post-area" method="post">
+
         <div>标题 <input type="text" name="title"></div>
         <div>美化链接 <input type="text" name="burl"></div>
         <div>正文
-            <textarea name="detail" id="" cols="30" rows="10"></textarea>
+            <textarea name="body" id="" cols="30" rows="10"></textarea>
         </div>
 
         <div>
@@ -40,7 +40,25 @@
         <div>
             <p>标签</p>
         </div>
-
+        <button type="button" id="testbtn">test</button>
+        <button type="submit">test submit</button>
     </form>
+    <script>
+        //var formdata=$('#post-area').serializeArray();
+        //var csrftokendata={'csrfmiddlewaretoken': Cookies.get('csrftoken')};
+        console.log($('#post-area').serializeArray().concat({'csrfmiddlewaretoken': Cookies.get('csrftoken')}));
+        $(document).on("click", $("#testbtn"), function () {
+            $.post({
+            data: $('#post-area').serializeArray().concat({'csrfmiddlewaretoken': Cookies.get('csrftoken')}),
+            dataType: "json",
+            url: $('#post-area').attr('action'),
+            success: function (data) {
+                console.log(data);
+            }
+        })
+
+        });
+
+    </script>
 
 {% endblock %}

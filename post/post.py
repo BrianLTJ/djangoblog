@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
+from django.views.decorators.csrf import ensure_csrf_cookie
 from post.models import Article, Tag, Category
 
 
@@ -11,12 +12,12 @@ def post_dashboard_index(request):
 def post_list_page(request):
     return render(request, 'post/post_list.html')
 
-
+@ensure_csrf_cookie
 def post_detail_page(request, post_item_id):
     data = {'post_id': post_item_id}
     return render(request, 'post/post_detail.html', data)
 
-
+@ensure_csrf_cookie
 def post_new_post(request):
     return render(request, 'post/post_detail.html')
 
@@ -39,6 +40,6 @@ def post_add_handler(request):
     resdata['status']='ok'
     resdata['post_id']='test_post_id'
 
-    return render(request, 'post')
+    return JsonResponse(resdata)
 
 
