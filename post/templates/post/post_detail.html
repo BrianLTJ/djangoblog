@@ -8,10 +8,11 @@
         <div>标题 <input type="text" name="title"></div>
         <div>美化链接 <input type="text" name="burl"></div>
         <div>正文
-            <textarea name="body" id="" cols="30" rows="10"></textarea>
+            <textarea name="content" id="" cols="30" rows="10"></textarea>
         </div>
 
         <div>
+            <input type="hidden" name="article_id" id="article_id">
             <div>文章状态:
                 <select name="post_state" id="">
                     <option value="d" selected>草稿</option>
@@ -44,16 +45,18 @@
         <button type="submit">test submit</button>
     </form>
     <script>
-        //var formdata=$('#post-area').serializeArray();
-        //var csrftokendata={'csrfmiddlewaretoken': Cookies.get('csrftoken')};
-        console.log($('#post-area').serializeArray().concat({'csrfmiddlewaretoken': Cookies.get('csrftoken')}));
-        $(document).on("click", $("#testbtn"), function () {
+        $("#testbtn").on("click", function () {
+            var formdata=$('#post-area').serializeArray();
+            var csrftokendata={"name":'csrfmiddlewaretoken', "value": Cookies.get('csrftoken')};
             $.post({
-            data: $('#post-area').serializeArray().concat({'csrfmiddlewaretoken': Cookies.get('csrftoken')}),
+            data: formdata.concat(csrftokendata),
             dataType: "json",
             url: $('#post-area').attr('action'),
             success: function (data) {
                 console.log(data);
+                if(data['result']=='ok'){
+                    $("#article_id").val(data['post_id']);
+                }
             }
         })
 

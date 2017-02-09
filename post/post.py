@@ -31,15 +31,58 @@ def post_tag_page(request):
 
 
 def post_add_handler(request):
-
-
-
-
     resdata = dict()
+    if request.method=='POST':
+        new_article=Article()
+        reqdata=request.POST
+        new_article.title=reqdata.get('title')
+        new_article.beautified_url=reqdata.get('burl')
+        new_article.content=reqdata.get('content')
+        new_article.state=reqdata.get('post_state')
+        new_article.visibility=reqdata.get('visibility')
 
-    resdata['status']='ok'
-    resdata['post_id']='test_post_id'
+        if reqdata.get('article_id')!=None and reqdata.get('article_id')!='':
+            #Have article_id
+            new_article.article_id=reqdata.get('article_id')
+        else:
+            '''
+            Fetch a article id
+            '''
+            articlelist = Article.objects.all()
+            articleidlist=list()
+            for i in articlelist:
+                if i.article_id not in articleidlist:
+                    articleidlist.append(i.article_id)
 
-    return JsonResponse(resdata)
+            articleidlist=sorted(articleidlist)
+            article_id=1
+            if len(articleidlist)>0:
+                article_id=articleidlist[len(articleidlist)-1]+1
+            else:
+                article_id=1
+
+            new_article.article_id=article_id
+
+        '''
+        new_article.category = Category.objects.get(id=int(request.POST.get('category')))
+        tags = request.POST.getlist('tags[]')
+        new_article.tags.clear()
+        for tag in tags:
+            new_article.tags.add(Tag.objects.get(id=tag))
+
+        '''
+
+        new_article.save()
+
+        resdata['result'] = 'ok'
+        resdata['post_id'] = int(new_article.article_id)
+
+        return JsonResponse(resdata)
+    else:
+        resdata['result'] = 'error000'
+        return JsonResponse(resdata)
+
+
+
 
 

@@ -11,7 +11,13 @@ class Article(models.Model):
     beautified_url = models.TextField('美化URL', null=True)
     article_id = models.IntegerField('文章id', null=False)
     content = models.TextField('内容', null=True)
-    content_type = models.CharField('内容类型', default='h',max_length=2)
+    '''
+    内容类型
+    (Default)m markdown
+    (Future)h html
+    两种类型不能互转
+    '''
+    content_type = models.CharField('内容类型', default='m',max_length=2)
     update_time = models.DateTimeField('更新时间', null=False, auto_now=True)
     '''
     文章状态:
@@ -20,7 +26,7 @@ class Article(models.Model):
     r 回收站
     (Future)h 历史版本
     '''
-    status = models.CharField('文章状态', null=False,default='d', max_length=2)
+    state = models.CharField('文章状态', null=False,default='d', max_length=2)
     '''
     可见性
     p 公开
