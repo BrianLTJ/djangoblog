@@ -41,9 +41,16 @@ def post_add_handler(request):
         new_article.state=reqdata.get('post_state')
         new_article.visibility=reqdata.get('visibility')
 
-        if reqdata.get('article_id')!=None and reqdata.get('article_id')!='':
-            #Have article_id
+        if reqdata.get('article_id') != None and reqdata.get('article_id') != '':
+            # Have article_id
             new_article.article_id=reqdata.get('article_id')
+
+            '''change this article_id posts into history'''
+            old_posts=Article.objects.filter(article_id=new_article.article_id)
+            for i in old_posts:
+                i.state='h'
+                i.save()
+
         else:
             '''
             Fetch a article id
@@ -76,6 +83,8 @@ def post_add_handler(request):
 
         resdata['result'] = 'ok'
         resdata['post_id'] = int(new_article.article_id)
+
+        print('123')
 
         return JsonResponse(resdata)
     else:
