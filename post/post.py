@@ -22,10 +22,6 @@ def post_new_post(request):
     return render(request, 'post/post_detail.html')
 
 
-def post_cate_page(request):
-    return render(request, 'post/post_cate.html')
-
-
 def post_tag_page(request):
     return render(request, 'post/post_tag.html')
 

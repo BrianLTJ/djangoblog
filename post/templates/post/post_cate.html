@@ -1,4 +1,23 @@
 {% extends 'post/framework.html' %}
 {% block content %}
     cate list
+    <div>
+    Fetching&nbsp;data...
+    <span>id</span> -- <span>cate_name</span>
+    </div>
+    <div>
+        <form id="new-cate" action="{% url 'cate_handler' %}">
+            <input type="text" name="name">
+            <button type="submit">保存</button>
+        </form>
+    </div>
+{% verbatim %}
+    <script>
+        Vue.component('cate', {
+            props: ['cate'],
+            template: '<span>{{ cate.id }}</span> -- <span>{{ cate.name }}</span>'
+        });
+    </script>
+{% endverbatim %}
+
 {% endblock %}
